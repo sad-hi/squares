@@ -1,5 +1,6 @@
 let squareArea = document.querySelector('#squarearea');
 let squareCount = parseInt(Math.random()*21)+30; //30-50
+let topZ = 0; //highest z-index used so far
 document.querySelector('#add').onclick = addSquare;
 document.querySelector('#change').onclick = changeColors;
 
@@ -12,6 +13,7 @@ function addSquare(){
     let size = parseInt(Math.random()*11)+45; //45-55
     square.style.width = size+"px";
     square.style.height = size+"px";
+    square.onclick = squareClick;
     squareArea.append(square);
 }
 
@@ -35,5 +37,17 @@ function changeColors(){
     let squares = document.querySelectorAll('.square');
     for(let i = 0; i < squares.length; i++){
         squares[i].style.backgroundColor = getRandomColor();
+    }
+}
+
+function squareClick(){
+    if(parseInt(this.style.zIndex) == topZ){
+        //already on top, so delete it
+        this.remove();
+    }
+    else{
+        //bring it to the front
+        topZ++;
+        this.style.zIndex = topZ;
     }
 }
